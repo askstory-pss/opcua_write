@@ -80,7 +80,7 @@ async function SendData(session, nodeId, value) {
   }
 
 const PORT = process.env.PORT || 6000;
-const HOST = process.env.HOST
+const HOST = '10.10.10.51'
 app.listen(PORT, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}.`);
 });
