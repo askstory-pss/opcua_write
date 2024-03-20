@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/test', async (req, res) => {
+app.post('/opc_write', async (req, res) => {
     const nodeId = req.body.nodeId;
     const value = req.body.value;
 
