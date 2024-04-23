@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const redis = require('redis');
+
+const client_redis = redis.createClient();
 
 const { OPCUAClient, AttributeIds, DataType, VariantArrayType } = require("node-opcua-client");
 
@@ -33,6 +36,21 @@ app.post('/opc_write', async (req, res) => {
     } catch (error) {
         console.error("Initialization failed:", error);
         await client.disconnect();
+        res.status(500).json({ error: 'An error occurred' });
+    }
+});
+
+app.post('/batchid', async (req, res) => {
+    const mixerId = req.body.mixerId;
+    const value = req.body.value;
+
+    try{
+        await client_redis.connect();
+        await client_redis.set(mixerId, value);
+        res.status(200).send('POST request received successfully.');
+    } catch (error) {
+        console.error("Initialization failed:", error);
+        await client_redis.disconnect();
         res.status(500).json({ error: 'An error occurred' });
     }
 });
