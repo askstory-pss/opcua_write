@@ -48,6 +48,7 @@ app.post('/batchid', async (req, res) => {
         await client_redis.connect();
         await client_redis.set(mixerId, value);
         res.status(200).send('POST request received successfully.');
+        await client_redis.disconnect();
     } catch (error) {
         console.error("Initialization failed:", error);
         await client_redis.disconnect();
